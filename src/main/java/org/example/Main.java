@@ -39,6 +39,11 @@ public class Main {
 
         Activity[] events = gson.fromJson(getResponse.body(), Activity[].class);
 
+        output(events);
+
+    }
+
+    public static void output(Activity[] events) {
         for (int i = 0; i < events.length; i++) {
             if (events[i].getType().equals("PushEvent")) {
                 System.out.print("Pushed ");
@@ -46,7 +51,11 @@ public class Main {
                 System.out.print(" commits to ");
                 System.out.println(events[i].getRepo().getName());
             }
-        }
 
+            else if (events[i].getType().equals("WatchEvent")) {
+                System.out.print("Starred ");
+                System.out.println(events[i].getRepo().getName());
+            }
+        }
     }
 }
