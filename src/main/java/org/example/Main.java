@@ -45,17 +45,26 @@ public class Main {
 
     public static void output(Activity[] events) {
         for (int i = 0; i < events.length; i++) {
-            if (events[i].getType().equals("PushEvent")) {
-                System.out.print("Pushed ");
-                System.out.print(events[i].getPayload().getCommits().size());
-                System.out.print(" commits to ");
-                System.out.println(events[i].getRepo().getName());
+
+            String eventName = events[i].getType();
+
+            switch (eventName) {
+                case "PushEvent":
+                    System.out.print("Pushed ");
+                    System.out.print(events[i].getPayload().getCommits().size());
+                    System.out.print(" commits to ");
+                    System.out.println(events[i].getRepo().getName());
+                    break;
+                case "WatchEvent":
+                    System.out.print("Starred ");
+                    System.out.println(events[i].getRepo().getName());
+                    break;
+                case "IssuesEvent":
+                    System.out.print("Opened a new issue in ");
+                    System.out.println(events[i].getRepo().getName());
+                    break;
             }
 
-            else if (events[i].getType().equals("WatchEvent")) {
-                System.out.print("Starred ");
-                System.out.println(events[i].getRepo().getName());
-            }
         }
     }
 }
